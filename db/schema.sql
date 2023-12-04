@@ -1,6 +1,6 @@
 -- Create database if not exists
-CREATE DATABASE IF NOT EXISTS employee_tracker_db;
-USE employee_tracker_db;
+CREATE DATABASE IF NOT EXISTS employee_tracker;
+USE employee_tracker;
 
 -- Create department table
 CREATE TABLE IF NOT EXISTS department (

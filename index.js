@@ -1,15 +1,7 @@
 // Include the required packages
-const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-
-// Create a connection to the database
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'your_password', // Replace with your MySQL password
-  database: 'employee_tracker_db'
-});
+const db = require('./db/connect');
 
 // Connect to the database
 db.connect((err) => {
@@ -117,7 +109,7 @@ const addDepartment = () => {
       name: 'name'
     }
   ]).then((data) => {
-    db.query('INSERT INTO department (name) VALUES (?)', data.name, (err, result) => {
+    db.query('INSERT INTO department (name) VALUES (?)', [data.name], (err, result) => {
       if (err) throw err;
       console.log(`\nNew department added: ${data.name}`);
       viewAllDepartments();
@@ -217,4 +209,3 @@ const updateEmployeeRole = () => {
     );
   });
 };
-
