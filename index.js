@@ -5,12 +5,11 @@ const mysql = require('mysql2');
 
 // Create a connection to the database
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '#Sohappy4Life', 
-    database: 'employee_tracker'
-  });
-
+  host: 'localhost',
+  user: 'root',
+  password: '#Sohappy4Life', 
+  database: 'employee_tracker'
+});
 
 // Connect to the database
 db.connect((err) => {
@@ -34,6 +33,9 @@ const employeeTracker = () => {
         'Add A Role',
         'Add An Employee',
         'Update An Employee Role',
+        'Delete A Department',
+        'Delete A Role',
+        'Delete An Employee',
         'Log Out'
       ]
     }
@@ -59,6 +61,15 @@ const employeeTracker = () => {
         break;
       case 'Update An Employee Role':
         updateEmployeeRole();
+        break;
+      case 'Delete A Department':
+        deleteDepartment();
+        break;
+      case 'Delete A Role':
+        deleteRole();
+        break;
+      case 'Delete An Employee':
+        deleteEmployee();
         break;
       case 'Log Out':
         console.log('Logging out');
@@ -205,5 +216,56 @@ const updateEmployeeRole = () => {
         viewAllEmployees();
       }
     );
+  });
+};
+
+// Function to delete a department
+const deleteDepartment = () => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'Enter the ID of the department you want to delete:',
+      name: 'department_id'
+    }
+  ]).then((data) => {
+    db.query('DELETE FROM department WHERE id = ?', [data.department_id], (err, result) => {
+      if (err) throw err;
+      console.log(`\nDepartment with ID ${data.department_id} deleted successfully`);
+      viewAllDepartments();
+    });
+  });
+};
+
+// Function to delete a role
+const deleteRole = () => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'Enter the ID of the role you want to delete:',
+      name: 'role_id'
+    }
+  ]).then((data) => {
+    db.query('DELETE FROM role WHERE id = ?', [data.role_id], (err, result) => {
+      if (err) throw err;
+      console.log(`\nRole with ID ${data.role_id} deleted successfully`);
+      viewAllRoles();
+    });
+  });
+};
+
+// Function to delete an employee
+const deleteEmployee = () => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'Enter the ID of the employee you want to delete:',
+      name: 'employee_id'
+    }
+  ]).then((data) => {
+    db.query('DELETE FROM employee WHERE id = ?', [data.employee_id], (err, result) => {
+      if (err) throw err;
+      console.log(`\nEmployee with ID ${data.employee_id} deleted successfully`);
+      viewAllEmployees();
+    });
   });
 };
