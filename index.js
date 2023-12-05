@@ -1,7 +1,16 @@
 // Include the required packages
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const db = require('./db/connect');
+const mysql = require('mysql2');
+
+// Create a connection to the database
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '#Sohappy4Life', 
+    database: 'employee_tracker'
+  });
+
 
 // Connect to the database
 db.connect((err) => {
